@@ -1,0 +1,7 @@
+name = "TimeDependentFunctions"
+uuid = "e2ae1964-b054-4566-b7bf-cff42dcfe62e"
+authors = ["Igor Malheiros <igormalheiros92@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

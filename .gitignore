@@ -1,0 +1,45 @@
+# Julia-related files
+*.jl.cov
+*.jl.mem
+*.jl.gcda
+*.jl.gcno
+
+# Compilation artifacts
+*.so
+*.dylib
+*.dll
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# VS Code settings and workspace files
+.vscode/
+*.code-workspace
+
+# Julia environments and artifacts
+Manifest.toml
+.artifacts/
+.depots/
+.scratchspaces/
+.julia/
+.julia_history
+
+# Build artifacts
+__precompile__/
+docs/build/
+docs/site/
+
+# Tests and logs
+test/runtests.log
+coverage/
+*.cov
+
+# REPL history
+.history
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
