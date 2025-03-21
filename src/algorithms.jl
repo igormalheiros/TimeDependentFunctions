@@ -21,7 +21,7 @@ end
 
 function travel_time_breakpoints(data::TimeDependentData, (i, j)::Tuple{Int,Int})
     S = data.S
-    Z = data.Z    
+    Z = data.Z
     H = data.H
     v = data.v
     k = data.κ[(i, j)]
