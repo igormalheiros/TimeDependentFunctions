@@ -13,8 +13,11 @@ function IGP(data::TimeDependentData, s0::Float64, (i, j)::Tuple{Int,Int})
     while s_ > S[h+1]
         c = c - v[k, h] * (S[h+1] - s)
         s = S[h+1]
-        s_ = s + (c / v[k, h+1])
         h = h + 1
+        if h > Z
+            break
+        end
+        s_ = s + (c / v[k, h])
     end
     return s_ - s0
 end
