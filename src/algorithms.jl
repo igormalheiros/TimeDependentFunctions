@@ -2,7 +2,7 @@ function IGP(data::TimeDependentData, s0::Float64, (i, j)::Tuple{Int,Int})
     S = data.S
     Z = data.Z
     v = data.v
-
+    @show "XXXXXXXXX"
     s = s0
     h = get_speed_interval(S, Z, s0)
     c = data.c[i, j]
