@@ -19,7 +19,8 @@ import TimeDependentFunctions: get_speed_interval, next_time_threshold
     @test next_time_threshold(S1, 2.5) == 4.0
     @test next_time_threshold(S1, 4.0) == 8.0
     @test next_time_threshold(S1, 5.0) == 8.0
-    @test_throws ErrorException next_time_threshold(S1, 8.0)
+    @test next_time_threshold(S1, 8.0) == 8.0
+    @test_throws ErrorException next_time_threshold(S1, 8.1)
     @test_throws ErrorException next_time_threshold(S1, 100.0)
 
     S2 = [0.0, 5.0]
@@ -32,7 +33,8 @@ import TimeDependentFunctions: get_speed_interval, next_time_threshold
 
     @test next_time_threshold(S2, 0.0) == 5.0
     @test next_time_threshold(S2, 4.9) == 5.0
-    @test_throws ErrorException next_time_threshold(S2, 5.0)
+    @test next_time_threshold(S2, 5.0) == 5.0
+    @test_throws ErrorException next_time_threshold(S2, 5.1)
     @test_throws ErrorException next_time_threshold(S2, 100.0)
 end
 
