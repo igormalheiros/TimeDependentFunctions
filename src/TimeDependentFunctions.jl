@@ -11,7 +11,6 @@ export TimeDependentData,
     Φ,
     Φ_inv,
     travel_time_breakpoints,
-    travel_time_breakpoints,
     linear_piecewise_affine_t,
     bs_piecewise_affine_t
 
