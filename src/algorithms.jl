@@ -72,7 +72,7 @@ function Φ(data::TimeDependentData, s0::Float64, (i, j)::Tuple{Int,Int})
     v = data.v
 
     s = s0
-    h = findfirst(x -> x > s0, S) - 1
+    h = something(findfirst(x -> x > s0, S), Z + 1) - 1
     c = data.c[i, j]
     k = data.κ[(i, j)]
 
@@ -118,7 +118,7 @@ function Φ_inv(data::TimeDependentData, s0::Float64, (i, j)::Tuple{Int,Int})
     v = data.v
 
     s = s0
-    h = findlast(x -> x < s0, S)
+    h = something(findlast(x -> x < s0, S), 1)
     c = data.c[i, j]
     k = data.κ[(i, j)]
 
@@ -162,6 +162,7 @@ the **arrival time function**, and modified here to compute breakpoints of the *
 
 """
 function travel_time_breakpoints(data::TimeDependentData, (i, j)::Tuple{Int,Int})
+    @show "000000000"
     S = data.S
     Z = data.Z
     v = data.v
@@ -173,6 +174,7 @@ function travel_time_breakpoints(data::TimeDependentData, (i, j)::Tuple{Int,Int}
 
     push!(B, (0.0, Φ(data, 0.0, (i, j))))
     for h = 1:h_r
+        @show S[h]
         push!(B, (S[h], Φ(data, S[h], (i, j))))
     end
     for h = h_l:Z
