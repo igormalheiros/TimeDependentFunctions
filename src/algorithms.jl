@@ -1,5 +1,5 @@
 """
-    IGP(data::TimeDependentData, s0::Float64, (i, j)::Tuple{Int, Int}) -> Float64
+    Φ_t(data::TimeDependentData, s0::Float64, (i, j)::Tuple{Int, Int}) -> Float64
 
 Computes the **travel time** on a time-dependent arc `(i, j)` when departing at time `s0`, 
 based on the piecewise constant speed model proposed by Ichoua et al. (2003).
@@ -19,28 +19,8 @@ based on the piecewise constant speed model proposed by Ichoua et al. (2003).
 Ichoua, S., Gendreau, M., & Potvin, J. Y. (2003). Vehicle dispatching with time-dependent travel times. *European Journal of Operational Research*.
 
 """
-function IGP(data::TimeDependentData, s0::Float64, (i, j)::Tuple{Int,Int})
-    S = data.S
-    Z = data.Z
-    v = data.v
-
-    s = s0
-    h = something(findfirst(i -> S[i] <= s0 < S[i+1], 1:Z), Z)
-    c = data.c[i, j]
-    k = data.κ[(i, j)]
-
-    s_ = s + (c / v[k, h])
-
-    while s_ > S[h+1]
-        c = c - v[k, h] * (S[h+1] - s)
-        s = S[h+1]
-        h = h + 1
-        if h > Z
-            break
-        end
-        s_ = s + (c / v[k, h])
-    end
-    return s_ - s0
+function Φ_t(data::TimeDependentData, s0::Float64, (i, j)::Tuple{Int,Int})
+    return Φ(data, s0, (i, j)) - s0
 end
 
 """
@@ -173,16 +153,15 @@ function travel_time_breakpoints(data::TimeDependentData, (i, j)::Tuple{Int,Int}
 
     push!(B, (0.0, Φ(data, 0.0, (i, j))))
     for h = 1:h_r
-        push!(B, (S[h], Φ(data, S[h], (i, j))))
+        push!(B, (S[h], Φ(data, S[h], (i, j)) - S[h]))
     end
     for h = h_l:Z
-        push!(B, (Φ_inv(data, S[h], (i, j)), S[h]))
+        push!(B, (Φ_inv(data, S[h], (i, j)), S[h] - Φ_inv(data, S[h], (i, j))))
     end
-    push!(B, (Φ_inv(data, S[end], (i, j)), S[end]))
+    push!(B, (Φ_inv(data, S[end], (i, j)), S[end] - Φ_inv(data, S[end], (i, j))))
 
     unique!(B)
     sort!(B, by = x -> x[1])
-    B = [(x[1], x[2] - x[1]) for x in B]
     return B
 end
 

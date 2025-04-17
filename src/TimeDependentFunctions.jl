@@ -7,7 +7,7 @@ include("algorithms.jl")
 export TimeDependentData,
     AffineSegment,
     build_segments,
-    IGP,
+    Φ_t,
     Φ,
     Φ_inv,
     travel_time_breakpoints,

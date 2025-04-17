@@ -64,12 +64,12 @@ using Test, TimeDependentFunctions
         while s < S1[end-1] + 2
             @test isapprox(
                 linear_piecewise_affine_t(s, affine_B),
-                IGP(data1, s, arc);
+                Φ_t(data1, s, arc);
                 atol = 1e-2,
             )
             @test isapprox(
                 bs_piecewise_affine_t(s, affine_B),
-                IGP(data1, s, arc);
+                Φ_t(data1, s, arc);
                 atol = 1e-2,
             )
             s += step
@@ -97,12 +97,12 @@ using Test, TimeDependentFunctions
         while s < S2[end-1] + 2
             @test isapprox(
                 linear_piecewise_affine_t(s, affine_B),
-                IGP(data2, s, arc);
+                Φ_t(data2, s, arc);
                 atol = 1e-2,
             )
             @test isapprox(
                 bs_piecewise_affine_t(s, affine_B),
-                IGP(data2, s, arc);
+                Φ_t(data2, s, arc);
                 atol = 1e-2,
             )
             s += step
@@ -125,10 +125,10 @@ using Test, TimeDependentFunctions
     while s < S3[end-1] + 2
         @test isapprox(
             linear_piecewise_affine_t(s, affine_B),
-            IGP(data3, s, arc);
+            Φ_t(data3, s, arc);
             atol = 1e-2,
         )
-        @test isapprox(bs_piecewise_affine_t(s, affine_B), IGP(data3, s, arc); atol = 1e-2)
+        @test isapprox(bs_piecewise_affine_t(s, affine_B), Φ_t(data3, s, arc); atol = 1e-2)
         s += step
     end
 end
