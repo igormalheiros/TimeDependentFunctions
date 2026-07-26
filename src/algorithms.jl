@@ -165,6 +165,22 @@ function travel_time_breakpoints(data::TimeDependentData, (i, j)::Tuple{Int,Int}
     return B
 end
 
+"""
+    linear_piecewise_affine_t(s::Float64, segments::Vector{AffineSegment}) -> Float64
+
+Evaluates a piecewise affine function at `s` by scanning `segments` linearly from the start
+until the segment containing `s` is found.
+
+# Arguments
+- `s::Float64`: The point at which to evaluate the function.
+- `segments::Vector{AffineSegment}`: The affine segments, ordered by `x_min` (see [`build_segments`](@ref)).
+
+# Returns
+- `Float64`: The value of the piecewise affine function at `s`.
+
+# Time Complexity
+- O(n), where `n` is the number of segments.
+"""
 function linear_piecewise_affine_t(s::Float64, segments::Vector{AffineSegment})
     for i = 1:length(segments)
         # If not the last segment, check if s is before the next segment's start.
@@ -182,9 +198,26 @@ function linear_piecewise_affine_t(s::Float64, segments::Vector{AffineSegment})
     error("s = $s is outside the domain of the piecewise function.")
 end
 
+"""
+    bs_piecewise_affine_t(s::Float64, segments::Vector{AffineSegment}) -> Float64
+
+Evaluates a piecewise affine function at `s` using binary search to locate the segment
+containing `s`. Equivalent to [`linear_piecewise_affine_t`](@ref) but faster for large
+segment lists.
+
+# Arguments
+- `s::Float64`: The point at which to evaluate the function.
+- `segments::Vector{AffineSegment}`: The affine segments, ordered by `x_min` (see [`build_segments`](@ref)).
+
+# Returns
+- `Float64`: The value of the piecewise affine function at `s`.
+
+# Time Complexity
+- O(log n), where `n` is the number of segments.
+"""
 function bs_piecewise_affine_t(s::Float64, segments::Vector{AffineSegment})
     # Extract x_min values for binary search
-    x_mins = getfield.(segments, :x_min)  # Corrected from getindex to getfield
+    x_mins = getfield.(segments, :x_min)
 
     # Find the rightmost segment where x_min <= s using binary search
     i = searchsortedlast(x_mins, s)

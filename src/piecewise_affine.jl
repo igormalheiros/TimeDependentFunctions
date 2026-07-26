@@ -14,6 +14,18 @@ struct AffineSegment
     x_min::Float64
 end
 
+"""
+    build_segments(B::Vector{Tuple{Float64, Float64}}) -> Vector{AffineSegment}
+
+Builds a vector of [`AffineSegment`](@ref)s connecting consecutive breakpoints in `B`,
+e.g. the output of [`travel_time_breakpoints`](@ref).
+
+# Arguments
+- `B::Vector{Tuple{Float64, Float64}}`: Breakpoints `(x, y)` sorted by `x`.
+
+# Returns
+- `Vector{AffineSegment}`: One segment per consecutive pair of breakpoints, in the same order as `B`.
+"""
 function build_segments(B::Vector{Tuple{Float64,Float64}})
     segments = AffineSegment[]
     for i = 1:length(B)-1
