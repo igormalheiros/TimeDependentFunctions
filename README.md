@@ -46,12 +46,6 @@ When you want the source installed inside your own project.
    using TimeDependentFunctions
    ```
 
-**Cloning a project that already has the submodule:**
-
-```sh
-git submodule update --init --recursive
-```
-
 ## Usage
 
 ```julia
