@@ -11,13 +11,45 @@ A Julia package of auxiliary functions for computing **time-dependent travel tim
 
 ## Installation
 
-The package is not yet registered. Add it directly from the local path or a Git URL:
+The package is not yet registered. Add it directly from a Git URL:
 
 ```julia
 using Pkg
-Pkg.develop(path = "path/to/TimeDependentFunctions")
-# or
-Pkg.add(url = "https://github.com/igormalheiros/TimeDependentFunctions.jl")
+Pkg.add(url = "https://github.com/igormalheiros/TimeDependentFunctions")
+```
+
+### As a Git submodule
+
+When you want the source installed inside your own project.
+
+1. Add the submodule to your project (pick a location, here `lib/`):
+
+   ```sh
+   git submodule add https://github.com/igormalheiros/TimeDependentFunctions.git lib/TimeDependentFunctions
+   ```
+
+2. Point your Julia environment at the checked-out path. From the root of your
+   project:
+
+   ```julia
+   using Pkg
+   Pkg.activate(".")
+   Pkg.develop(path = "lib/TimeDependentFunctions")
+   ```
+
+   This records a relative `[sources]` entry in your `Project.toml`, so the
+   dependency resolves from the submodule instead of a registry.
+
+3. Use it as usual:
+
+   ```julia
+   using TimeDependentFunctions
+   ```
+
+**Cloning a project that already has the submodule:**
+
+```sh
+git submodule update --init --recursive
 ```
 
 ## Usage
